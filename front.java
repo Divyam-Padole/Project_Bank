@@ -22,6 +22,8 @@ public class front extends JPanel implements ItemListener, ActionListener {
     private final JButton clear;
     private final JButton enter;
 
+    private final JButton account_detail;
+
     private final JTextField pinTextBox;
 
     private final JTextArea display;
@@ -135,7 +137,7 @@ public class front extends JPanel implements ItemListener, ActionListener {
         JButton withdraw = new JButton();
         JButton balance = new JButton();
         JButton mini_stat = new JButton();
-        JButton account_detail = new JButton();
+        account_detail = new JButton();
         display = new JTextArea();
         pinTextBox=new JTextField();
         insert = new JRadioButton("CARD STATUS");
@@ -215,6 +217,7 @@ public class front extends JPanel implements ItemListener, ActionListener {
         numpad8.addActionListener(this);
         numpad9.addActionListener(this);
         numpad0.addActionListener(this);
+        account_detail.addActionListener(this);
     }
 
     public static void main (String[] args) {
@@ -241,6 +244,8 @@ public class front extends JPanel implements ItemListener, ActionListener {
             pinTextBox.setText(null);
             word=0;
             pin_count=0;
+            user_pin=null;
+            user_id=null;
         }
     }
 
@@ -311,6 +316,8 @@ public class front extends JPanel implements ItemListener, ActionListener {
                 pinTextBox.setText(null);
                 word=0;
                 pin_count=0;
+                user_id=null;
+                user_pin=null;
             }
 
 
@@ -325,11 +332,11 @@ public class front extends JPanel implements ItemListener, ActionListener {
                     } else {
                         String a = pinTextBox.getText();
                         if(count==0) {
-                            ResultSet result = connection_mysql.connectToDB("SELECT * FROM USER WHERE ACCOUNT_NO=" + a + ";");
+                            ResultSet result = connection_mysql.connectToDB("SELECT * FROM DETAIL WHERE ACCOUNT_NO=" + a + ";");
                             assert result != null;
                             result.next();
-                            user_id=result.getString(1);
-                            user_pin=result.getString(2);
+                            user_id=result.getString(2);
+                            user_pin=result.getString(3);
 
                         }
 
@@ -357,6 +364,14 @@ public class front extends JPanel implements ItemListener, ActionListener {
                 word=0;
                 pin_count=0;
                 }
+
+            //--------------------------------------------------------------------
+
+            if(e.getSource()==account_detail)
+            {
+                detail d= new detail();
+                display.setText(d.detail_screen());
+            }
 
         }
         catch(Exception f)
