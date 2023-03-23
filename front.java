@@ -4,6 +4,7 @@ package project2;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.sql.ResultSet;
 import javax.swing.*;
 
 public class front extends JPanel implements ItemListener, ActionListener {
@@ -27,6 +28,7 @@ public class front extends JPanel implements ItemListener, ActionListener {
 
     private final JRadioButton insert;
 
+    private  String user_id,user_pin;
 
     String option= """
 
@@ -287,8 +289,6 @@ public class front extends JPanel implements ItemListener, ActionListener {
 
             }}
             if(e.getSource() == clear ){
-
-
                     String text= pinTextBox.getText();
                     if(text.length()>0) {
                         pinTextBox.setText(text.substring(0, text.length() - 1));
@@ -323,17 +323,28 @@ public class front extends JPanel implements ItemListener, ActionListener {
                     if (pinTextBox.getText().equals("")) {
                         display.setText(null_enter);
                     } else {
-                        int a = Integer.parseInt(pinTextBox.getText());
-                        if (a == 123) {
+                        String a = pinTextBox.getText();
+                        if(count==0) {
+                            ResultSet result = connection_mysql.connectToDB("SELECT * FROM USER WHERE ACCOUNT_NO=" + a + ";");
+                            assert result != null;
+                            result.next();
+                            user_id=result.getString(1);
+                            user_pin=result.getString(2);
+
+                        }
+
+                        if (a.equals(user_id)){
                             pinTextBox.setText(null);
                             display.setText(pin);
                             count=1;
                             limit_flag=1;
                         }
-                        else if (a == 223 && count==1) {
-                            pinTextBox.setVisible(false);
-                            display.setText(option);
-                            count=0;
+                        else if (a.equals(user_pin)) {
+                            if(count==1) {
+                                pinTextBox.setVisible(false);
+                                display.setText(option);
+                                count = 0;
+                            }
                         }
                         else {
                             display.setText(pin_error);
