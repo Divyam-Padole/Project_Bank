@@ -286,16 +286,23 @@ public class front extends JPanel implements ItemListener, ActionListener {
                 }
 
             }}
-            if(e.getSource() == clear) {
-                String text= pinTextBox.getText();
-                pinTextBox.setText(text.substring(0,text.length()-1));
-                if(limit_flag==0)
-                {
-                    word-=1;
-                }
-                else {
-                    pin_count-=1;
-                }
+            if(e.getSource() == clear ){
+
+
+                    String text= pinTextBox.getText();
+                    if(text.length()>0) {
+                        pinTextBox.setText(text.substring(0, text.length() - 1));
+                        if (limit_flag == 0) {
+                            word -= 1;
+                        } else {
+                            pin_count -= 1;
+                        }
+                    }
+                    else{
+                        word=0;
+                        pin_count=0;
+                    }
+
             }
             if (e.getSource() == cancel)
             {
