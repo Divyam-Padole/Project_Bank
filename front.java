@@ -4,8 +4,12 @@ package project2;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.awt.geom.RoundRectangle2D;
 import java.sql.ResultSet;
+import javax.annotation.processing.RoundEnvironment;
 import javax.swing.*;
+import javax.swing.border.BevelBorder;
+import javax.swing.border.MatteBorder;
 
 public class front extends JPanel implements ItemListener, ActionListener {
     private final JButton numpad1;
@@ -105,30 +109,43 @@ public class front extends JPanel implements ItemListener, ActionListener {
         //set component bounds (only needed by Absolute Positioning)
         numpad1.setBounds (255, 340, 110, 40);
         numpad1.setFont(font);
+        numpad1.setBackground(new Color(0xE9F3F4));
         numpad2.setBounds (375, 340, 110, 40);
         numpad2.setFont(font);
+        numpad2.setBackground(new Color(0xE9F3F4));
         numpad3.setBounds (495, 340, 110, 40);
         numpad3.setFont(font);
+        numpad3.setBackground(new Color(0xE9F3F4));
         numpad4.setBounds (255, 395, 110, 40);
         numpad4.setFont(font);
+        numpad4.setBackground(new Color(0xE9F3F4));
         numpad5.setBounds (375, 395, 110, 40);
         numpad5.setFont(font);
+        numpad5.setBackground(new Color(0xE9F3F4));
         numpad6.setBounds (495, 395, 110, 40);
         numpad6.setFont(font);
+        numpad6.setBackground(new Color(0xE9F3F4));
         numpad7.setBounds (255, 450, 110, 40);
         numpad7.setFont(font);
+        numpad7.setBackground(new Color(0xE9F3F4));
         numpad8.setBounds (375, 450, 110, 40);
         numpad8.setFont(font);
+        numpad8.setBackground(new Color(0xE9F3F4));
         numpad9.setBounds (495, 450, 110, 40);
         numpad9.setFont(font);
+        numpad9.setBackground(new Color(0xE9F3F4));
         numpad0.setBounds (375, 500, 110, 40);
         numpad0.setFont(font);
+        numpad0.setBackground(new Color(0xE9F3F4));
         cancel.setBounds (615, 340, 130, 40);
         cancel.setFont(font);
+        cancel.setBackground(new Color(0xE9F3F4));
         clear.setBounds (615, 395, 131, 40);
         clear.setFont(font);
+        clear.setBackground(new Color(0xE9F3F4));
         enter.setBounds (615, 450, 130, 40);
         enter.setFont(font);
+        enter.setBackground(new Color(0xE9F3F4));
 
 //        -------------------------------------------------------------
 
@@ -161,31 +178,39 @@ public class front extends JPanel implements ItemListener, ActionListener {
         deposit.setBounds (32, 95, 225, 70);
         deposit.setText(">>");
         deposit.setHorizontalAlignment(JTextField.CENTER);
+        deposit.setBackground(new Color(0xE9F3F4));
         
         new_pin.setBounds (32, 165, 225, 70);
         new_pin.setText(">>");
         new_pin.setHorizontalAlignment(JTextField.CENTER);
+        new_pin.setBackground(new Color(0xE9F3F4));
         
         withdraw.setBounds (32, 235, 225, 70);
         withdraw.setText(">>");
         withdraw.setHorizontalAlignment(JTextField.CENTER);
+        withdraw.setBackground(new Color(0xE9F3F4));
 
         balance.setBounds (692, 95, 225, 70);
         balance.setText("<<");
         balance.setHorizontalAlignment(JTextField.CENTER);
+        balance.setBackground(new Color(0xE9F3F4));
 
         mini_stat.setBounds (692, 165, 225, 70);
         mini_stat.setText("<<");
         mini_stat.setHorizontalAlignment(JTextField.CENTER);
+        mini_stat.setBackground(new Color(0xE9F3F4));
 
         account_detail.setBounds (692, 235, 225, 70);
         account_detail.setText("<<");
         account_detail.setHorizontalAlignment(JTextField.CENTER);
+        account_detail.setBackground(new Color(0xE9F3F4));
 
         display.setBounds(257,95,435,210);
         display.setText(start);
         display.setEditable(false);
         display.setFont(font);
+        display.setBorder(BorderFactory.createStrokeBorder(new BasicStroke((float) 5.0f)));
+        display.setBackground(new Color(0xF3F3F3));
 
 
         pinTextBox.setBounds(257, 305, 435, 30);
@@ -200,6 +225,7 @@ public class front extends JPanel implements ItemListener, ActionListener {
         insert.setLocation(50, 400);
         insert.setSize(200,20);
         insert.setFont(font);
+        insert.setBackground(new Color(0xCDCDCD));
 
         //--------------------------
 
@@ -218,13 +244,19 @@ public class front extends JPanel implements ItemListener, ActionListener {
         numpad9.addActionListener(this);
         numpad0.addActionListener(this);
         account_detail.addActionListener(this);
+
+        //---------------------------------------------------
+
     }
 
     public static void main (String[] args) {
         JFrame frame = new JFrame ("MyPanel");
         frame.setResizable(false);
         frame.setDefaultCloseOperation (JFrame.EXIT_ON_CLOSE);
-        frame.getContentPane().add (new front());
+        front fr = new front();
+        fr.setBackground(new Color(0xC6C6C6));
+        frame.getContentPane().add (fr);
+
         frame.pack();
         frame.setVisible (true);
 
@@ -367,16 +399,16 @@ public class front extends JPanel implements ItemListener, ActionListener {
 
             //--------------------------------------------------------------------
 
-            if(e.getSource()==account_detail)
+            if(e.getSource()==account_detail && limit_flag==1)
             {
                 detail d= new detail();
-                display.setText(d.detail_screen());
+                display.setText(d.detail_screen(user_id));
             }
 
         }
         catch(Exception f)
         {
-            System.out.println(f);
+            f.printStackTrace();
         }
     }
 }
